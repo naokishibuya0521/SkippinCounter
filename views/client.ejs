@@ -1,0 +1,34 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Skippin Counter Client</title>
+</head>
+
+<body>
+	<header>
+	<h1 id="h1"><%= title %> : Server IP = <%= ip %></h1>
+	</header>
+
+	<button onclick="count();">Count</button>
+	<button onclick="clearCount();">Clear</button>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+
+		// var socketio = io.connect('http://<%= ip %>:8080');
+		var socketio = io.connect('http://localhost:8080');
+
+		function count() {
+			socketio.emit("count", {area: 0});
+		};
+
+		function clearCount() {
+			socketio.emit("clearCount", {area: 0});
+		};
+
+	</script>
+
+</body>
+
+</html>

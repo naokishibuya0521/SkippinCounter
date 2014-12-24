@@ -1,0 +1,31 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Skippin Counter Server</title>
+</head>
+
+<body>
+	<header>
+	<h1 id="h1"><%= title %> : Server IP = <%= ip %></h1>
+	</header>
+
+	<div id="dispArea">[Area A] 0</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+
+
+		var socketio = io.connect('http://localhost:8080');
+
+		socketio.on("publish", function (data) {
+			countArea.innerText = "[Area A] " + data.count;
+		});
+
+		var countArea = document.getElementById("dispArea");
+
+	</script>
+
+</body>
+
+</html>
