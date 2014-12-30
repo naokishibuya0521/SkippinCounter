@@ -28,25 +28,27 @@ server.listen(app.get('port'), function() {
 });
 
 
-var count_0 = 0;
+var countArray = new Array(0, 0, 0, 0);
 
 io.sockets.on("connection", function (socket) {
 	console.log("socket connection event");
 
     socket.on("count", function (data) {
-    	if(data.area == 0) {
-    		count_0++;
+    	if(data.area != null) {
+    		var area = data.area;
+    		countArray[area]++;
+	    	console.log("count(): countArray[" + area + "]=" + countArray[area] );
+	    	io.sockets.emit("publish", {"area": area, "count": countArray[area]});
     	}
-    	console.log("count(): count_0=" + count_0 );
-    	io.sockets.emit("publish", {'area': 0, 'count': count_0});
     });
 
     socket.on("clearCount", function (data) {
-    	if(data.area == 0) {
-    		count_0 = 0;
+    	if(data.area != null) {
+    		var area = data.area;
+    		countArray[area] = 0;
+	    	console.log("clearCount(): countArray[" + area + "]=" + countArray[area] );
+	    	io.sockets.emit("publish", {"area": area, "count": countArray[area]});
     	}
-    	console.log("clearCount(): count_0=" + count_0 );
-    	io.sockets.emit("publish", {'area': 0, 'count': count_0});
     });
 
 });

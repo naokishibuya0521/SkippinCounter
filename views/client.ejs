@@ -10,21 +10,34 @@
 	<h1 id="h1"><%= title %> : Server IP = <%= ip %></h1>
 	</header>
 
+	<select name="areaSelect" onchange="setCountArea(this);">
+		<option value="0">Area A</option>
+		<option value="1">Area B</option>
+		<option value="2">Area C</option>
+		<option value="3">Area D</option>
+	</select>
+
 	<button onclick="count();">Count</button>
 	<button onclick="clearCount();">Clear</button>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript">
 
+		var area = 0;
+
 		var socketio = io.connect('http://<%= ip %>:8080');
 		// var socketio = io.connect('http://localhost:8080');
 
 		function count() {
-			socketio.emit("count", {area: 0});
+			socketio.emit("count", {"area": area});
 		};
 
 		function clearCount() {
-			socketio.emit("clearCount", {area: 0});
+			socketio.emit("clearCount", {"area": area});
+		};
+
+		function setCountArea(obj) {
+			area = obj.options[obj.selectedIndex].value;
 		};
 
 	</script>
